@@ -154,11 +154,11 @@ public class QueryExecutor {
     public void test(){
 //        System.out.println(personExist("Jakab","Gipsz"));
 //        deleteFromTableDepartment("Vienna");
-//        addNewDepartment("Lc Vienna");
+//        addNewDepartment("Graz");
 //        System.out.println(getIdEmployee("Nemo","Captain"));
 //        deleteFromTableEmployee("Captain","Nemo");
-//        addnewEmployee("graz","mohsen",Gender.Male,"fakhari","Esther","m.fakhari@qcentris.com","06643710777",LocalDate.now().minusYears(2));
-//            resetTable(Employee.class);
+//        addnewEmployee("graz","mohsen",Gender.Mal e,"fakhari","Esther","m.fakhari@qcentris.com","06643710777",LocalDate.now().minusYears(2));
+//            resetTable(Department.class);
 //        session.beginTransaction();
 //        System.out.println(session.createQuery("SELECT id FROM Department  WHERE department_name  = 'Graz'").getResultList());
 
@@ -173,7 +173,7 @@ public class QueryExecutor {
 //        session.close();
 //        System.out.println(persistentInstance);
 
-        getDepartmentList();
+//        getDepartmentList();
 
 
     }
