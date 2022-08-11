@@ -1,15 +1,17 @@
 package com.mastertheboss.util.email;
 
+import org.apache.poi.poifs.nio.DataSource;
+
 import java.util.Properties;
 
-import javax.mail.Authenticator;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
+import javax.mail.*;
 import javax.mail.Message.RecipientType;
-import javax.mail.MessagingException;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Session;
-import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class GmailTextMsgSendWithSSL {
 
@@ -17,8 +19,8 @@ public class GmailTextMsgSendWithSSL {
     Session session;
     MimeMessage mimeMessage;
 
-    String USERNAME = "fmohsen22@gmail.com";
-    String PASSWORD = "ojckyjllhxlotfgb";
+    String USERNAME = "mohsen.fakhari@iaeste.at";
+    String PASSWORD = "srouvkjvgdgybilq";
     String HOSTNAME = "smtp.gmail.com";
     String SSL_PORT = "465";
     boolean AUTH = true;
@@ -26,7 +28,7 @@ public class GmailTextMsgSendWithSSL {
 
     public static void main(String args[]) throws MessagingException {
         String EmailSubject = "Subject:Text Subject";
-        String EmailBody = "Text Message Body: Hello World";
+        String EmailBody = "Text Message Body: Hello World test";
         String ToAddress = "m.fakhari@qcentris.com";
 
         GmailTextMsgSendWithSSL gmailTextMsgSend = new GmailTextMsgSendWithSSL();
@@ -63,6 +65,24 @@ public class GmailTextMsgSendWithSSL {
             mimeMessage.addRecipient(RecipientType.TO, new InternetAddress(ToAddress));
             mimeMessage.setFrom(new InternetAddress("no-reply@abc.com", "WebMaster"));
             mimeMessage.setSubject(EmailSubject);
+
+            //image part
+            MimeMultipart multipart = new MimeMultipart("related");
+            BodyPart textPart = new MimeBodyPart();
+            String htmlText ="<img src=\"cid:image\"> " +
+                    "<html><head><style>h1 {background-color: #FFF100;padding: 15px; text-indent: 40px;} " ;
+            textPart.setContent(htmlText, "text/html");
+
+            multipart.addBodyPart(textPart);
+            BodyPart imagePart = new MimeBodyPart();
+            FileDataSource fds = new FileDataSource
+                    ("C:\\Users\\MohsenFakhari\\OneDrive - QCENTRIS\\Bilder\\birthday.jpg");
+            mimeMessage.setDataHandler(new DataHandler(fds));
+            mimeMessage.setHeader("Content-ID","<image>");
+            mimeMessage.setDisposition(MimeBodyPart.INLINE);
+
+            multipart.addBodyPart(imagePart);
+            mimeMessage.setContent(multipart);
 
             // setting text message body
             mimeMessage.setText(EmailBody);

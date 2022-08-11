@@ -9,6 +9,10 @@ import java.util.List;
 
 public class EmailSender {
     public static void main(String[] args) {
+        sendEmail();
+    }
+
+    public static void sendEmail(){
         List< Employee > employeeBirthdayList = new QueryExecutor().employeesWithBirthday();
 
         for (Employee em: employeeBirthdayList){
@@ -20,7 +24,5 @@ public class EmailSender {
             GmailTextMsgSendWithSSL gmailTextMsgSend = new GmailTextMsgSendWithSSL();
             gmailTextMsgSend.sendGmail(EmailSubject, EmailBody, ToAddress);
         }
-
-
     }
 }

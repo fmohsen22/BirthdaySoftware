@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 
@@ -33,15 +35,18 @@ public class Employee_Form_V001 {
     private JLabel result;
 
     public Employee_Form_V001() {
-        List departments =  new QueryExecutor().getDepartmentList();
-        for (var department:departments) {
-            this.department.addItem(department);
-        }
+//        List departments =  new QueryExecutor().getDepartmentList();
+//        for (var department:departments) {
+//            this.department.addItem(department);
+//        }
+
+        updateDep();
 
         department.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 MyLogger.InfoLog(Employee_Form_V001.class, (String) department.getSelectedItem());
+
             }
         });
         addUpdateEmployeeButton.addActionListener(new ActionListener() {
@@ -101,8 +106,28 @@ public class Employee_Form_V001 {
                 result.setText("Employee '"+ familyName.getText()+"' is successfully deleted from database.");
             }
         });
+
+
+        department.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                department.removeAllItems();
+                updateDep();
+            }
+        });
     }
 
+
+
+    public JComboBox updateDep(){
+        List departments =  new QueryExecutor().getDepartmentList();
+        for (var department:departments) {
+            this.department.list();
+            this.department.addItem(department);
+        }
+        return department;
+    }
 
     public static void main(String[] args) throws IOException {
 
